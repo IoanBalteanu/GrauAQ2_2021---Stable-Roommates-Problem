@@ -6,3 +6,6 @@ main: main.cpp
 	
 Generator: Generator.cpp Generator.hh
 	g++ -c Generator.cpp
+	
+distclean:
+	rm -r Program main.o Generator.o
