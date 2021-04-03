@@ -2,11 +2,16 @@
 #include <vector>
 #include <algorithm> 
 #include <ctime>
-#include <cstdlib>     
+#include <cstdlib>   
+#include <list>  
 
 using namespace std;
 
-typedef vector<vector<int>> PROBLEM;
+typedef vector<vector<int>> Problem;
+typedef vector<Problem> ProblemSet;
+
+typedef vector<list<int>> LProblem;
+typedef vector<LProblem> LProblemSet;
 
 class Generator
 {
@@ -14,10 +19,12 @@ class Generator
         
         Generator(){}
         
-        static void getTable(PROBLEM& table, int n);
+        static void getTable(Problem& table, int n);
         
-        static void shuffleTable(PROBLEM& table, int n);
+        static void shuffleTable(Problem& table, int n);
+        
+        static LProblem toList(Problem& table);
         
     public:
-        static vector<PROBLEM> getProblems(int nProbs, int nRms);
+        static LProblemSet getProblems(int nProbs, int nRms);
 };

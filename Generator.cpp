@@ -3,14 +3,14 @@
 using namespace std;
 
 
-void Generator::shuffleTable(vector<vector<int>>& table, int n)
+void Generator::shuffleTable(Problem& table, int n)
 {
     for(int i = 0 ; i < n ; ++i){
         random_shuffle(++table[i].begin(),table[i].end());
     }
 }
 
-void Generator::getTable(vector<vector<int>>& table, int n) 
+void Generator::getTable(Problem& table, int n) 
 {
     for (int i = 0 ; i < n; ++i) {
         table[i][0] = i;
@@ -21,19 +21,38 @@ void Generator::getTable(vector<vector<int>>& table, int n)
     }
 }
 
-
-vector<vector<vector<int>>> Generator::getProblems(int nProbs, int nRms)
+LProblem Generator::toList(Problem& p)
 {
-    vector<vector<vector<int>>> Problems (nProbs, vector<vector<int>> (2*nRms,vector<int> (2*nRms)));
+    LProblem lp;
+    
+    for (auto row : p)
+    {
+        list<int> aux(row.begin(), row.end());
+        lp.push_back(aux);
+    }
 
-    Generator::getTable(Problems[0], 2*nRms);
+    return lp;
+}
+
+
+LProblemSet Generator::getProblems(int nProbs, int nRms)
+{
+    //Declare Problem Sets
+    ProblemSet problems (nProbs, Problem (2*nRms,vector<int> (2*nRms)));
+    LProblemSet Lproblems;
+    //Generate first Problem of 2nRms * 2nRms
+    Generator::getTable(problems[0], 2*nRms);
     
+    //Copy basic Problem to all Set
     for(int i = 1 ; i < nProbs ; ++i){
-        Problems[i] = Problems[0];
-    }
-    for(int i = 0 ; i < nProbs ; ++i){
-        Generator::shuffleTable(Problems[i], 2*nRms);
+        problems[i] = problems[0];
     }
     
-    return Problems;
+    //Shuffle all Problems and assign them to lists and then to a Set of List problems
+    for(int i = 0 ; i < nProbs ; ++i){
+        Generator::shuffleTable(problems[i], 2*nRms);
+        Lproblems.push_back(Generator::toList(problems[i]));
+    }
+    
+    return Lproblems;
 }
