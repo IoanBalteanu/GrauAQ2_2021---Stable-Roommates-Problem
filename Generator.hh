@@ -4,7 +4,8 @@
 #include <ctime>
 #include <cstdlib>   
 #include <list>  
-
+#include <time.h>
+#include <unistd.h>
 using namespace std;
 
 typedef vector<vector<int>> Problem;

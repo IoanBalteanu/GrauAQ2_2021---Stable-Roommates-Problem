@@ -1,5 +1,5 @@
 #include"Generator.hh"
-
+#include"Irving.hh"
 using namespace std;
 
 void printTables(vector<LProblemSet>& table, int probs) {
@@ -43,14 +43,19 @@ void printTables(vector<LProblemSet>& table, int probs) {
     }
 }
 
+unsigned int hash3(unsigned int h1, unsigned int h2, unsigned int h3)
+{
+    return (((h1 * 2654435789U) + h2) * 2654435789U) + h3;
+}
+
 int main()
 {
-    srand(time(0));
+    srand(hash3(time(0), time(0), getpid()));
     int generationType = -1;
     cout << "0: One set of problems." << endl <<  "1: N sets of problems with size within [L,R] where |N| = R - L + 1" << endl <<"Choose generation type: ";
     
     bool correctGT = false;
-    
+    vector<LProblemSet> out;
     while(!correctGT)
     {
         cin >> generationType;
@@ -58,18 +63,20 @@ int main()
         if(generationType == 0)
         {
             correctGT = true;
+            
             int nProbs = 0, nRms = 0;
+            
             cout << "Input number of problems to be generated: ";
             cin >> nProbs;
+            
             cout << "Input number of available rooms: ";
             cin >> nRms;
             
             LProblemSet problems = Generator::getProblems(nProbs,nRms);
-            vector<LProblemSet> out;
+            
             out.push_back(problems);
-            printTables(out, nProbs);
         }
-        /*else if (generationType == 1)
+        else if (generationType == 1)
         {
             correctGT = true;
             int nProbs = 0, L = 0, R = 0;
@@ -77,27 +84,38 @@ int main()
             cin >> nProbs;
             
             while(L < 2){
-                cout << "Input minimum size of a problem (L). Must greater or eaqual to 2: ";
+                cout << "Input minimum avaliable rooms (L). Must be greater or eaqual to 2: ";
                 cin >> L;
             }
             
-            cout << "Input maximum size of a problem (R): " ;
+            cout << "Input maximum avaliable rooms (R): " ;
             cin >> R;
-            
-            vector<ProblemSet> out;
             
             while(L <= R){
                 out.push_back(Generator::getProblems(nProbs,L));
                 L++;
             }
             
-            printTables(out, nProbs);
             
-        }*/
+        }
         else
         {
             cout << "Incorrect generation type, try again: ";
         }
+    }
+    
+    for (auto set: out)
+    {
+        cout << set.size() << " " << set[0].size() << " ";
+        int p = 0, i = 0;
+        
+        for(auto problem : set)
+        {
+            
+            if(Irving::executeAlgorithm(problem)) ++p;
+            else ++i;
+        }
+        cout << p << " " << i << endl;
     }
     
     return 0;
