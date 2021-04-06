@@ -1,5 +1,6 @@
 #include"Generator.hh"
 #include"Irving.hh"
+#include <fstream>
 using namespace std;
 
 void printTables(vector<LProblemSet>& table, int probs) {
@@ -56,12 +57,18 @@ int main()
     
     bool correctGT = false;
     vector<LProblemSet> out;
+    
+    ofstream Info;
+    string nameTXT;
+    
+    
     while(!correctGT)
     {
         cin >> generationType;
         
         if(generationType == 0)
         {
+            
             correctGT = true;
             
             int nProbs = 0, nRms = 0;
@@ -103,10 +110,14 @@ int main()
             cout << "Incorrect generation type, try again: ";
         }
     }
+    cout << "Name of the file where results will be saved: ";
+    cin >> nameTXT;
+    Info.open(nameTXT+".txt",ios::out);
     
     for (auto set: out)
     {
-        cout << set.size() << " " << set[0].size() << " ";
+        Info << set.size() << " " << set[0].size() << " ";
+        //cout << set.size() << " " << set[0].size() << " ";
         int p = 0, i = 0;
         
         for(auto problem : set)
@@ -115,8 +126,10 @@ int main()
             if(Irving::executeAlgorithm(problem)) ++p;
             else ++i;
         }
-        cout << p << " " << i << endl;
+        //cout << p << " " << i << endl;
+        Info << p << " " << i << endl;
     }
+    cout << "The results have been saved in " << nameTXT << ".txt " << endl;
     
     return 0;
 }
