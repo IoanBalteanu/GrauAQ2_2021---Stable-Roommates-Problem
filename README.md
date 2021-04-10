@@ -6,14 +6,15 @@ Generació de problemes:
 
 Algorimse principal:
 
-Script Python:
-
 Estructura del programa :
   - Generació de problemes -> classe c++ amb mètodes estàtics per evitar la creació d'objectes "Generador"  (Generador.cpp, Generador.h)
   - Execució de problemes -> classe c++ amb mètodes estàtics per evitar la creació d'objectes "Martens" (Martens.cpp, Martens.h)
   - Càlcul de resultats i visualització d'aquests -> script Python. 
   - Main c++ que gestioni la greació de problemes aleatories, l'execució de l'algorisme, i la generació de resultats contra els que s'executará un script Python per la comapració i visualització de les dades. ###SI DONA TEMPS, PROVAR DE FER-HO DE FORMA PRAL·LELA###
 
+Script R:
+  - generador_solver.R -> fa la generació de solucions i posteriorment executa l'algoritme de Irving per solucionar el problema. 
+  - analisis.R -> llegeix els fitxers que surten del generador_solver, fa els testos i els fa print.
 
 #Estructura de GITHUB
 1.Branca main òn es guardar la primera instància d'un programa complert (es pot prescindir del script python en aquesta instància).
@@ -21,7 +22,5 @@ Estructura del programa :
 3.Per fer canvis a dev s'han de crear altres branques (basades en dev)  i un cop els canvis estiguin fets, fer una pull request a dev per fusionar les branques(això és per la situació òn haguem de fer canvis al mateix arxiu, poder fer-ho a al vegada, sino es poden generar problemes de fusió.)
 
 Ens podem estalviar aquestes restriccions si els canvis són petits i molt clars, com pot ser un ; que falta, o una referència mal posada, pero en general si la podem seguir millor.
-
-Ompleneu els espais de més amunt quan us vagi be, aixi podrem usar aquest fitxer com part de la documentació, suposo que lis agradarà veure com ens hem organitzat.
 
 Més endavant també es pot fer servir per donar les instruccions de compilació i execució.
