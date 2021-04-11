@@ -15,9 +15,11 @@ Estructura del programa :
 Scripts R:
   - script_GeneradorIrving.R > fa la generació de solucions i posteriorment executa l'algoritme de Irving per solucionar cada problema generat.
   - script_Analisis.R -> llegeix els fitxer experiment_size_11.csv que fa l'altre script, fa els testos, els fa print i guarda les figures.
+
 Requeriments scripts R:
   - script_GeneradorIrving.R -> library(matchingR), es pot instal.lar fent install.packages("matchingR")
   - script_Analisis.R        -> library(ggplot2),   es pot instal.lar fent install.packages("ggplot2")
+
 Execució scripts R:
   - Rscript script_GeneradorIrving.R
   - Rscript script_Analisis.R
