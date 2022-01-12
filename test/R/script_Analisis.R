@@ -59,17 +59,6 @@ exp(as.numeric(lmod$coefficients[1]) + as.numeric(lmod$coefficients[2])*n_pred^(
   (1 + exp(as.numeric(lmod$coefficients[1]) + as.numeric(lmod$coefficients[2])*n_pred^(-1/4)))
 
 ## Plots
-### Observed and Expected stable matchings
-dfPlot <- data.frame(stable = c(observed, expected),
-                     type = rep(c("Observed", "Expected"), each = length(observed)),
-                     n = rep(df$n, times = 2))
-
-ggplot(dfPlot, aes(x=c(1:10, 1:10), y=stable, color = type, shape= type)) + geom_point(size = 2) + theme_light() + 
-  expand_limits(y=0) +
-  ylab("Frequency of stable") + xlab(expression('n'[room])) + theme(legend.title = element_blank(), legend.position=c(0.8, 0.9))
-  scale_x_continuous(breaks = c(0, 2500, 5000)) # , 7500, 10000, 12500, 15000, 17500, 20000
-  ggsave("freq_observed_vs_expected.png")
-  
 ### Time 
 dfPlot <- data.frame(time = c(df$t_roomST/df$stable, df$t_roomUN/df$unstable),
                      type = rep(c("Stable", "Unstable"), each = length(observed)),
@@ -89,16 +78,8 @@ sink("lm.txt", append = F, type = "output")
 summary(lmfit <- lm(time ~ I(n^2)*type, data = dfPlot))
 closeAllConnections()
 
-### Diferences 
-dfPlot <- data.frame(stable = observed - expected, type = factor(df$n),
-                     n = 1:length(df$n))
 
-ggplot(dfPlot, aes(x=type, y=stable, color = type)) + geom_point(size = 1) + theme_light() +
-  expand_limits(y=0) +
-  ylab("Observed - Expected") + xlab(expression('n'[room])) + theme(legend.title = element_blank())
-  ggsave("DifferencesObserved.png")
-
-## Pn vs Pn_obs
+### Pn vs Pn_obs
 pframe <- with(df, expand.grid(n=seq(min(df$n), max(df$n),length=100)))
 pframe$Pn_estimat <- predict(lmod, newdata=pframe, type="response")
 
